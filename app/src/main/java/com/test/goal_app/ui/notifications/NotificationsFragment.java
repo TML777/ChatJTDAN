@@ -1,20 +1,29 @@
 package com.test.goal_app.ui.notifications;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.test.goal_app.MainActivity;
+import com.test.goal_app.R;
+import com.test.goal_app.TestDB;
 import com.test.goal_app.databinding.FragmentNotificationsBinding;
 
 public class NotificationsFragment extends Fragment {
 
     private FragmentNotificationsBinding binding;
+
+    View root;
+
+    Button btn_testButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -22,7 +31,17 @@ public class NotificationsFragment extends Fragment {
                 new ViewModelProvider(this).get(NotificationsViewModel.class);
 
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        root = binding.getRoot();
+
+
+        /// Button for to open new activity to test DataBase
+        btn_testButton = root.findViewById(R.id.btn_testButton);
+        btn_testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchTestDB();
+            }
+        });
 
         final TextView textView = binding.textNotifications;
         notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
@@ -34,4 +53,13 @@ public class NotificationsFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
+    ////// Opens database activity
+    public void launchTestDB(){
+        Intent intent = new Intent(getActivity().getApplication(), TestDB.class);
+        startActivity(intent);
+
+    }
+
 }
