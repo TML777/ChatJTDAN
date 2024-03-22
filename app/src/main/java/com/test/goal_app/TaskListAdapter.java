@@ -1,11 +1,15 @@
 package com.test.goal_app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,13 +40,54 @@ public class TaskListAdapter extends ArrayAdapter<TaskModel> {
 
         TextView tv_rowName = convertView.findViewById(R.id.tv_rowName);
         TextView tv_rowShortDescription = convertView.findViewById(R.id.tv_rowShortDescription);
+        Button btn_listButton = convertView.findViewById(R.id.btn_listButton);
+        Button btn_taskPage = convertView.findViewById(R.id.btn_taskPage);
+        CheckBox cb_isCompleted = convertView.findViewById(R.id.cb_isCompleted);
+
+        TaskDataBaseHelper db = new TaskDataBaseHelper(getContext());
 
         tv_rowName.setText(getItem(position).getName());
         tv_rowShortDescription.setText(getItem(position).getShortDescription());
 
+        btn_listButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText( getContext(), "Delete= " + getItem(position).getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        cb_isCompleted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    TaskModel temp = getItem(position);
+                    getItem(position).setCompleted(cb_isCompleted.isChecked());
+                    db.updateTask(temp);
+            }
+        });
+
+        btn_taskPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTaskPage(getItem(position));
+            }
+        });
+
+
+
+
 
         return convertView;
     }
+
+    //opens task page with selected task
+    // selected task ID is passed as an extra named: taskID
+    private void openTaskPage(TaskModel taskModel)
+    {
+        Intent intent = new Intent(mContext, TaskPage.class);
+        intent.putExtra("taskID", taskModel.getId());
+        mContext.startActivity(intent);
+    }
+
 
     /*
     @NonNull

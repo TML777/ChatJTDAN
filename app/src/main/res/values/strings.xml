@@ -8,4 +8,7 @@
     <string name="BackButton"><![CDATA[<]]></string>
     <string name="EnterTaskName">Enter Task Name:</string>
     <string name="Update">Update</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_calendar">Calendar</string>
 </resources>

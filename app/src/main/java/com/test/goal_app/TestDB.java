@@ -29,7 +29,7 @@ public class TestDB extends AppCompatActivity {
         setContentView(R.layout.activity_test_db);
 
 
-        btn_openAddTaskPage = findViewById(R.id.btn_openAddTaskPage);
+        //btn_openAddTaskPage = findViewById(R.id.btn_openAddTaskPage);
         lv_mainTasksList = findViewById(R.id.lv_mainTasksList);
 
         db = new TaskDataBaseHelper(TestDB.this);

@@ -156,6 +156,48 @@ public class TaskDataBaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public ArrayList<TaskModel> getAllMain() {
+
+        ArrayList<TaskModel> returnList = new ArrayList<>();
+
+        int taskID, taskParentID;
+        String taskName, taskShortDescription, taskLongDescription, taskDeadLine, taskCreatedDate, taskCompletedDate;
+        Boolean taskIsCompleted;
+
+        String queryString = "SELECT * FROM " + TASK_TABLE + " WHERE " + COLUMN_IS_COMPLETED + " = 0";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+
+            do{
+                taskID = cursor.getInt(0);
+                taskName = cursor.getString(1);
+                taskShortDescription = cursor.getString(2);
+                taskLongDescription = cursor.getString(3);
+                taskDeadLine = cursor.getString(4);
+                taskIsCompleted = cursor.getInt(5) == 1 ? true : false;
+                taskCreatedDate = cursor.getString(6);
+                taskCompletedDate = cursor.getString(7);
+                taskParentID = cursor.getInt(8);
+
+                TaskModel task = new TaskModel(taskID, taskName, taskShortDescription, taskLongDescription,
+                        taskDeadLine, taskIsCompleted, taskCreatedDate, taskCompletedDate, taskParentID);
+
+                returnList.add(task);
+
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return returnList;
+
+    }
+
 
     // Gets from data base with id number
     public TaskModel getByID(int id){

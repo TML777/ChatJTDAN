@@ -114,14 +114,14 @@ public class TestDBAddTask extends AppCompatActivity {
         btn_addTaskBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openTaskList();
+                finish();
             }
         });
     }
 
-    // back to task list funcion
+    // back to task list function
     public void openTaskList(){
-        Intent intent = new Intent(this, TestDB.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

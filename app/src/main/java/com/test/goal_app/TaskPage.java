@@ -109,7 +109,7 @@ public class TaskPage extends AppCompatActivity {
         btn_taskPageBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openTaskList();
+                finish();
             }
         });
     }
