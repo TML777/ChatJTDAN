@@ -10,6 +10,7 @@ public class TaskModel {
     private String longDescription;
     private String deadlineDate;
     private Boolean isCompleted;
+    private Boolean isDeleted;
     private String createdDate;
     private String completedDate;
     private int parentTaskID;
@@ -18,7 +19,7 @@ public class TaskModel {
     public TaskModel(){}
 
     public TaskModel(int id, String name, String shortDescription, String longDescription, String deadlineDate,
-                     Boolean isCompleted, String createdDate, String completedDate, int parentTaskID){
+                     Boolean isCompleted, Boolean isDeleted, String createdDate, String completedDate, int parentTaskID){
 
         this.id = id;
         this.name = name;
@@ -26,6 +27,7 @@ public class TaskModel {
         this.longDescription = longDescription;
         this.deadlineDate = deadlineDate;
         this.isCompleted = isCompleted;
+        this.isDeleted = isDeleted;
         this.createdDate = createdDate;
         this.completedDate = completedDate;
         this.parentTaskID = parentTaskID;
@@ -90,6 +92,14 @@ public class TaskModel {
 
     public void setCompleted(Boolean completed) {
         isCompleted = completed;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 
     public String getCreatedDate() {

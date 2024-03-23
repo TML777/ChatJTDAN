@@ -89,13 +89,13 @@ public class TestDBAddTask extends AppCompatActivity {
 
                     taskModel = new TaskModel(-1, et_addTaskName.getText().toString(), et_addShortDesc.getText().toString(),
                             et_addLongDesc.getText().toString(), formatedDate,
-                            false, df2.format(new Date()), "none", -1);
+                            false, false, df2.format(new Date()), "none", -1);
                     Toast.makeText( TestDBAddTask.this, taskModel.toString() + " " + df2.format(new Date()), Toast.LENGTH_SHORT).show();
                 }
                 catch (Exception e){
                     Toast.makeText( TestDBAddTask.this, "Error creating customer", Toast.LENGTH_SHORT).show();
                     taskModel = new TaskModel(-1, "error", "error", "error",
-                            "error", false,  "error", "error",-1);
+                            "error", false, false,  "error", "error",-1);
 
                 }
                 TaskDataBaseHelper dataBaseHelper = new TaskDataBaseHelper(TestDBAddTask.this);

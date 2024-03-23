@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.test.goal_app.ui.home.HomeFragment;
+
 import java.util.ArrayList;
 
 
@@ -40,7 +42,7 @@ public class TaskListAdapter extends ArrayAdapter<TaskModel> {
 
         TextView tv_rowName = convertView.findViewById(R.id.tv_rowName);
         TextView tv_rowShortDescription = convertView.findViewById(R.id.tv_rowShortDescription);
-        Button btn_listButton = convertView.findViewById(R.id.btn_listButton);
+        Button btn_listButton = convertView.findViewById(R.id.btn_listDelete);
         Button btn_taskPage = convertView.findViewById(R.id.btn_taskPage);
         CheckBox cb_isCompleted = convertView.findViewById(R.id.cb_isCompleted);
 
@@ -52,7 +54,14 @@ public class TaskListAdapter extends ArrayAdapter<TaskModel> {
         btn_listButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText( getContext(), "Delete= " + getItem(position).getName(), Toast.LENGTH_SHORT).show();
+
+                TaskModel temp = getItem(position);
+                temp.setDeleted(true);
+                db.updateTask(temp);
+                Intent intent = new Intent(mContext, MainActivity.class);
+                //Testing opening specific fragments
+//                intent.putExtra("fragToOpen", "Calendar");
+                mContext.startActivity(intent);
             }
         });
 
@@ -60,7 +69,7 @@ public class TaskListAdapter extends ArrayAdapter<TaskModel> {
             @Override
             public void onClick(View v) {
                     TaskModel temp = getItem(position);
-                    getItem(position).setCompleted(cb_isCompleted.isChecked());
+                    temp.setCompleted(cb_isCompleted.isChecked());
                     db.updateTask(temp);
             }
         });

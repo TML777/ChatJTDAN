@@ -24,7 +24,7 @@
         />
 
     <Button
-        android:id="@+id/btn_listButton"
+        android:id="@+id/btn_listDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="0dp"
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="0dp"
-        android:layout_toStartOf="@+id/btn_listButton" />
+        android:layout_toStartOf="@+id/btn_listDelete" />
 
     <Button
         android:id="@+id/btn_taskPage"

@@ -57,7 +57,7 @@ public class NotificationsFragment extends Fragment {
 
     ////// Opens database activity
     public void launchTestDB(){
-        Intent intent = new Intent(getActivity().getApplication(), TestDB.class);
+        Intent intent = new Intent(getActivity().getApplication(), MainActivity.class);
         startActivity(intent);
 
     }

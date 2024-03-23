@@ -56,23 +56,20 @@ public class HomeFragment extends Fragment {
         taskListAdapter = new TaskListAdapter(getContext(),R.layout.task_list_row ,db.getAllMain());
         lv_mainTasksList.setAdapter(taskListAdapter);
 
-        Button btn_taskPage = root.findViewById(R.id.btn_taskPage);
 
 
 
 
-       /* lv_mainTasksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+
+        lv_mainTasksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                btn_taskPage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getContext(), "" + position, Toast.LENGTH_LONG).show();
-                    }
-                });
+                Toast.makeText(getContext(), "Toast", Toast.LENGTH_LONG).show();
 
             }
-        });*/
+        });
 
 
         btn_openAddTaskPage.setOnClickListener(new View.OnClickListener() {

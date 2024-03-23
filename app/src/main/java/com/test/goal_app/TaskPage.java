@@ -91,14 +91,13 @@ public class TaskPage extends AppCompatActivity {
                 btn_editTask.setVisibility(View.VISIBLE);
 
                 //new task model
-                TaskModel newTask = new TaskModel(task.getId(), et_name.getText().toString(), et_shortDescription.getText().toString(),
-                        et_longDescription.getText().toString(), et_deadLine.getText().toString(), task.getCompleted(),
-                        task.getCreatedDate(), task.getCompletedDate(), task.getParentTaskID());
+                task.setName(et_name.getText().toString());
+                task.setShortDescription(et_shortDescription.getText().toString());
+                task.setLongDescription(et_longDescription.getText().toString());
+                task.setDeadlineDate(et_deadLine.getText().toString());
 
                 //adds to db
-                db.updateTask(newTask);
-
-                task = newTask;
+                db.updateTask(task);
 
             }
         });
