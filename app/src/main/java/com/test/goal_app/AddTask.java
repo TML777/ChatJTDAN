@@ -13,12 +13,10 @@ import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
-public class TestDBAddTask extends AppCompatActivity {
+public class AddTask extends AppCompatActivity {
 
     Button btn_addTaskBack, btn_addTaskButton;
     EditText et_addTaskName, et_addShortDesc, et_addLongDesc;
@@ -34,7 +32,7 @@ public class TestDBAddTask extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_db_add_task);
+        setContentView(R.layout.activity_add_task);
 
         btn_addTaskBack = findViewById(R.id.btn_addTaskBack);
         btn_addTaskButton = findViewById(R.id.btn_addTaskButton);
@@ -43,7 +41,7 @@ public class TestDBAddTask extends AppCompatActivity {
         et_addLongDesc = findViewById(R.id.et_addLongDesc);
         cv_addCalendar = findViewById(R.id.cv_addCalendar);
 
-        db = new TaskDataBaseHelper(TestDBAddTask.this);
+        db = new TaskDataBaseHelper(AddTask.this);
 
 //        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 //        LocalDateTime now = LocalDateTime.now();
@@ -90,19 +88,19 @@ public class TestDBAddTask extends AppCompatActivity {
                     taskModel = new TaskModel(-1, et_addTaskName.getText().toString(), et_addShortDesc.getText().toString(),
                             et_addLongDesc.getText().toString(), formatedDate,
                             false, false, df2.format(new Date()), "none", -1);
-                    Toast.makeText( TestDBAddTask.this, taskModel.toString() + " " + df2.format(new Date()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText( AddTask.this, taskModel.toString() + " " + df2.format(new Date()), Toast.LENGTH_SHORT).show();
                 }
                 catch (Exception e){
-                    Toast.makeText( TestDBAddTask.this, "Error creating customer", Toast.LENGTH_SHORT).show();
+                    Toast.makeText( AddTask.this, "Error creating customer", Toast.LENGTH_SHORT).show();
                     taskModel = new TaskModel(-1, "error", "error", "error",
                             "error", false, false,  "error", "error",-1);
 
                 }
-                TaskDataBaseHelper dataBaseHelper = new TaskDataBaseHelper(TestDBAddTask.this);
+                TaskDataBaseHelper dataBaseHelper = new TaskDataBaseHelper(AddTask.this);
 
                 boolean success = dataBaseHelper.addOne(taskModel);
 
-                Toast.makeText( TestDBAddTask.this, "Success= " + success, Toast.LENGTH_SHORT).show();
+                Toast.makeText( AddTask.this, "Success= " + success, Toast.LENGTH_SHORT).show();
 
                 // back to task list
                 openTaskList();

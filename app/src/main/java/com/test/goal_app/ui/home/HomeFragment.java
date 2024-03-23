@@ -7,23 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.test.goal_app.MainActivity;
 import com.test.goal_app.R;
 import com.test.goal_app.TaskDataBaseHelper;
-import com.test.goal_app.TaskListAdapter;
-import com.test.goal_app.TaskModel;
-import com.test.goal_app.TaskPage;
-import com.test.goal_app.TestDB;
-import com.test.goal_app.TestDBAddTask;
+import com.test.goal_app.list_adapter.HomeListAdapter;
+import com.test.goal_app.AddTask;
 import com.test.goal_app.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
@@ -34,7 +28,7 @@ public class HomeFragment extends Fragment {
 
     ListView lv_mainTasksList;
 
-    TaskListAdapter taskListAdapter;
+    HomeListAdapter homeListAdapter;
 
     TaskDataBaseHelper db;
 
@@ -53,8 +47,8 @@ public class HomeFragment extends Fragment {
 
         db = new TaskDataBaseHelper(getContext());
 
-        taskListAdapter = new TaskListAdapter(getContext(),R.layout.task_list_row ,db.getAllMain());
-        lv_mainTasksList.setAdapter(taskListAdapter);
+        homeListAdapter = new HomeListAdapter(getContext(),R.layout.task_list_row ,db.getAllMain());
+        lv_mainTasksList.setAdapter(homeListAdapter);
 
 
 
@@ -89,7 +83,7 @@ public class HomeFragment extends Fragment {
     //add task page funcion
     private void openAddTaskPage()
     {
-        Intent intent = new Intent(getActivity().getApplication(), TestDBAddTask.class);
+        Intent intent = new Intent(getActivity().getApplication(), AddTask.class);
         startActivity(intent);
     }
 /*

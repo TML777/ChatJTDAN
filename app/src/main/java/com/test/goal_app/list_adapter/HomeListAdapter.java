@@ -1,4 +1,4 @@
-package com.test.goal_app;
+package com.test.goal_app.list_adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,25 +9,28 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.test.goal_app.ui.home.HomeFragment;
+import com.test.goal_app.MainActivity;
+import com.test.goal_app.R;
+import com.test.goal_app.TaskDataBaseHelper;
+import com.test.goal_app.TaskModel;
+import com.test.goal_app.TaskPage;
 
 import java.util.ArrayList;
 
 
 //Adapter for task list for display
 
-public class TaskListAdapter extends ArrayAdapter<TaskModel> {
+public class HomeListAdapter extends ArrayAdapter<TaskModel> {
 
     private Context mContext;
     private int mResourse;
 
 
-    public TaskListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<TaskModel> objects) {
+    public HomeListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<TaskModel> objects) {
         super(context, resource, objects);
         this.mContext = context;
         this.mResourse = resource;

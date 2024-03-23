@@ -6,9 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.test.goal_app.list_adapter.HomeListAdapter;
 
 public class TestDB extends AppCompatActivity {
 
@@ -16,7 +17,7 @@ public class TestDB extends AppCompatActivity {
 
     ListView lv_mainTasksList;
 
-    TaskListAdapter taskListAdapter;
+    HomeListAdapter homeListAdapter;
 
     TaskDataBaseHelper db;
 
@@ -37,8 +38,8 @@ public class TestDB extends AppCompatActivity {
 //        taskArrayAdapter = new ArrayAdapter<TaskModel>(TestDB.this, android.R.layout.simple_list_item_1, db.getEveryone());
 //        lv_mainTasksList.setAdapter(taskArrayAdapter);
 
-        taskListAdapter = new TaskListAdapter(this,R.layout.task_list_row ,db.getEveryone());
-        lv_mainTasksList.setAdapter(taskListAdapter);
+        homeListAdapter = new HomeListAdapter(this,R.layout.task_list_row ,db.getEveryone());
+        lv_mainTasksList.setAdapter(homeListAdapter);
 
 
         lv_mainTasksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,7 +65,7 @@ public class TestDB extends AppCompatActivity {
     //add task page funcion
     private void openAddTaskPage()
     {
-        Intent intent = new Intent(this, TestDBAddTask.class);
+        Intent intent = new Intent(this, AddTask.class);
         startActivity(intent);
     }
 
