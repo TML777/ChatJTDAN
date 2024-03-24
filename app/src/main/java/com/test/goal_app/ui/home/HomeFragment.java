@@ -42,12 +42,14 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
 
-        lv_mainTasksList = root.findViewById(R.id.lv_mainTasksList);
-        btn_openAddTaskPage = root.findViewById(R.id.btn_openAddTaskPage);
 
         db = new TaskDataBaseHelper(getContext());
 
-        homeListAdapter = new HomeListAdapter(getContext(),R.layout.task_list_row ,db.getAllMain());
+
+        lv_mainTasksList = root.findViewById(R.id.lv_mainTasksList);
+        btn_openAddTaskPage = root.findViewById(R.id.btn_openAddTaskPage);
+
+        homeListAdapter = new HomeListAdapter(getContext(),R.layout.home_list_row,db.getAllMain());
         lv_mainTasksList.setAdapter(homeListAdapter);
 
 
@@ -57,13 +59,13 @@ public class HomeFragment extends Fragment {
 
 
 
-        lv_mainTasksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "Toast", Toast.LENGTH_LONG).show();
-
-            }
-        });
+//        lv_mainTasksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Toast.makeText(getContext(), "Toast", Toast.LENGTH_LONG).show();
+//
+//            }
+//        });
 
 
         btn_openAddTaskPage.setOnClickListener(new View.OnClickListener() {

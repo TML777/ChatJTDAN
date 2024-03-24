@@ -38,7 +38,7 @@ public class TestDB extends AppCompatActivity {
 //        taskArrayAdapter = new ArrayAdapter<TaskModel>(TestDB.this, android.R.layout.simple_list_item_1, db.getEveryone());
 //        lv_mainTasksList.setAdapter(taskArrayAdapter);
 
-        homeListAdapter = new HomeListAdapter(this,R.layout.task_list_row ,db.getEveryone());
+        homeListAdapter = new HomeListAdapter(this,R.layout.home_list_row,db.getEveryone());
         lv_mainTasksList.setAdapter(homeListAdapter);
 
 

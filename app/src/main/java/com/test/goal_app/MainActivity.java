@@ -62,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             {
                 navView.setSelectedItemId(R.id.navigation_calendar);
             }
+            else if(fragToOpen.equals("Dashboard"))
+            {
+                navView.setSelectedItemId(R.id.navigation_dashboard);
+            }
 
         }
         else {

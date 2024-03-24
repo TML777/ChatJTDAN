@@ -45,7 +45,7 @@ public class HomeListAdapter extends ArrayAdapter<TaskModel> {
 
         TextView tv_rowName = convertView.findViewById(R.id.tv_rowName);
         TextView tv_rowShortDescription = convertView.findViewById(R.id.tv_rowShortDescription);
-        Button btn_listButton = convertView.findViewById(R.id.btn_listDelete);
+        Button btn_listDelete = convertView.findViewById(R.id.btn_listDelete);
         Button btn_taskPage = convertView.findViewById(R.id.btn_taskPage);
         CheckBox cb_isCompleted = convertView.findViewById(R.id.cb_isCompleted);
 
@@ -54,7 +54,7 @@ public class HomeListAdapter extends ArrayAdapter<TaskModel> {
         tv_rowName.setText(getItem(position).getName());
         tv_rowShortDescription.setText(getItem(position).getShortDescription());
 
-        btn_listButton.setOnClickListener(new View.OnClickListener() {
+        btn_listDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
