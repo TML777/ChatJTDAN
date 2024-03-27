@@ -6,10 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TaskDataBaseHelper extends SQLiteOpenHelper {
 
@@ -120,143 +120,38 @@ public class TaskDataBaseHelper extends SQLiteOpenHelper {
 
     // returns ArrayList of all tasks
     public ArrayList<TaskModel> getEveryone() {
-
-        ArrayList<TaskModel> returnList = new ArrayList<>();
-
-        int taskID, taskParentID;
-        String taskName, taskShortDescription, taskLongDescription, taskDeadLine, taskCreatedDate, taskCompletedDate;
-        Boolean taskIsCompleted, taskIsDeleted;
-
         String queryString = "SELECT * FROM " + TASK_TABLE;
 
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery(queryString, null);
-
-        if(cursor.moveToFirst()){
-
-            do{
-                taskID = cursor.getInt(0);
-                taskName = cursor.getString(1);
-                taskShortDescription = cursor.getString(2);
-                taskLongDescription = cursor.getString(3);
-                taskDeadLine = cursor.getString(4);
-                taskIsCompleted = cursor.getInt(5) == 1 ? true : false;
-                taskIsDeleted = cursor.getInt(6) == 1 ? true : false;
-                taskCreatedDate = cursor.getString(7);
-                taskCompletedDate = cursor.getString(8);
-                taskParentID = cursor.getInt(9);
-
-                TaskModel task = new TaskModel(taskID, taskName, taskShortDescription, taskLongDescription,
-                        taskDeadLine, taskIsCompleted, taskIsDeleted, taskCreatedDate, taskCompletedDate, taskParentID);
-
-                returnList.add(task);
-
-            }while(cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-
-        return returnList;
+        return getAllFromQueryString(queryString);
 
     }
 
+
     public ArrayList<TaskModel> getAllMain() {
+        String queryString = "SELECT * FROM " + TASK_TABLE
+                + " WHERE " + COLUMN_IS_COMPLETED + " = 0 AND " + COLUMN_IS_DELETED + " = 0";
 
-        ArrayList<TaskModel> returnList = new ArrayList<>();
-
-        int taskID, taskParentID;
-        String taskName, taskShortDescription, taskLongDescription, taskDeadLine, taskCreatedDate, taskCompletedDate;
-        Boolean taskIsCompleted, taskIsDeleted;
-
-        String queryString = "SELECT * FROM " + TASK_TABLE + " WHERE " + COLUMN_IS_COMPLETED + " = 0 AND " + COLUMN_IS_DELETED + " = 0";
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery(queryString, null);
-
-        if(cursor.moveToFirst()){
-
-            do{
-                taskID = cursor.getInt(0);
-                taskName = cursor.getString(1);
-                taskShortDescription = cursor.getString(2);
-                taskLongDescription = cursor.getString(3);
-                taskDeadLine = cursor.getString(4);
-                taskIsCompleted = cursor.getInt(5) == 1 ? true : false;
-                taskIsDeleted = cursor.getInt(6) == 1 ? true : false;
-                taskCreatedDate = cursor.getString(7);
-                taskCompletedDate = cursor.getString(8);
-                taskParentID = cursor.getInt(9);
-
-                TaskModel task = new TaskModel(taskID, taskName, taskShortDescription, taskLongDescription,
-                        taskDeadLine, taskIsCompleted, taskIsDeleted, taskCreatedDate, taskCompletedDate, taskParentID);
-
-                returnList.add(task);
-
-            }while(cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-
-        return returnList;
-
+        return getAllFromQueryString(queryString);
     }
 
     public ArrayList<TaskModel> getAllDeleted() {
+        String queryString = "SELECT * FROM " + TASK_TABLE
+                + " WHERE " + COLUMN_IS_DELETED + " = 1";
 
-        ArrayList<TaskModel> returnList = new ArrayList<>();
-
-        int taskID, taskParentID;
-        String taskName, taskShortDescription, taskLongDescription, taskDeadLine, taskCreatedDate, taskCompletedDate;
-        Boolean taskIsCompleted, taskIsDeleted;
-
-        String queryString = "SELECT * FROM " + TASK_TABLE + " WHERE " + COLUMN_IS_DELETED + " = 1";
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery(queryString, null);
-
-        if(cursor.moveToFirst()){
-
-            do{
-                taskID = cursor.getInt(0);
-                taskName = cursor.getString(1);
-                taskShortDescription = cursor.getString(2);
-                taskLongDescription = cursor.getString(3);
-                taskDeadLine = cursor.getString(4);
-                taskIsCompleted = cursor.getInt(5) == 1 ? true : false;
-                taskIsDeleted = cursor.getInt(6) == 1 ? true : false;
-                taskCreatedDate = cursor.getString(7);
-                taskCompletedDate = cursor.getString(8);
-                taskParentID = cursor.getInt(9);
-
-                TaskModel task = new TaskModel(taskID, taskName, taskShortDescription, taskLongDescription,
-                        taskDeadLine, taskIsCompleted, taskIsDeleted, taskCreatedDate, taskCompletedDate, taskParentID);
-
-                returnList.add(task);
-
-            }while(cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-
-        return returnList;
-
+        return getAllFromQueryString(queryString);
     }
 
     public ArrayList<TaskModel> getAllCompleted() {
+        String queryString = "SELECT * FROM " + TASK_TABLE
+                + " WHERE " + COLUMN_IS_COMPLETED + " = 1";
 
+        return getAllFromQueryString(queryString);
+    }
+
+
+    @NonNull
+    private ArrayList<TaskModel> getAllFromQueryString(String queryString) {
         ArrayList<TaskModel> returnList = new ArrayList<>();
-
-        int taskID, taskParentID;
-        String taskName, taskShortDescription, taskLongDescription, taskDeadLine, taskCreatedDate, taskCompletedDate;
-        Boolean taskIsCompleted, taskIsDeleted;
-
-        String queryString = "SELECT * FROM " + TASK_TABLE + " WHERE " + COLUMN_IS_COMPLETED + " = 1";
 
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -265,19 +160,7 @@ public class TaskDataBaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
 
             do{
-                taskID = cursor.getInt(0);
-                taskName = cursor.getString(1);
-                taskShortDescription = cursor.getString(2);
-                taskLongDescription = cursor.getString(3);
-                taskDeadLine = cursor.getString(4);
-                taskIsCompleted = cursor.getInt(5) == 1 ? true : false;
-                taskIsDeleted = cursor.getInt(6) == 1 ? true : false;
-                taskCreatedDate = cursor.getString(7);
-                taskCompletedDate = cursor.getString(8);
-                taskParentID = cursor.getInt(9);
-
-                TaskModel task = new TaskModel(taskID, taskName, taskShortDescription, taskLongDescription,
-                        taskDeadLine, taskIsCompleted, taskIsDeleted, taskCreatedDate, taskCompletedDate, taskParentID);
+                TaskModel task = getTaskFromCursor(cursor);
 
                 returnList.add(task);
 
@@ -288,46 +171,53 @@ public class TaskDataBaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return returnList;
-
     }
+
 
 
     // Gets from data base with id number
     public TaskModel getByID(int id){
         TaskModel returnTask = null;
 
-        int taskID, taskParentID;
-        String taskName, taskShortDescription, taskLongDescription, taskDeadLine, taskCreatedDate, taskCompletedDate;
-        Boolean taskIsCompleted, taskIsDeleted;
-
-        String queryString = "SELECT * FROM " + TASK_TABLE + " WHERE " + COLUMN_ID + " = " + id + ";";
+        String queryString = "SELECT * FROM " + TASK_TABLE
+                + " WHERE " + COLUMN_ID + " = " + id + ";";
 
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(queryString, null);
 
         if(cursor.moveToFirst()){
-
-            taskID = cursor.getInt(0);
-            taskName = cursor.getString(1);
-            taskShortDescription = cursor.getString(2);
-            taskLongDescription = cursor.getString(3);
-            taskDeadLine = cursor.getString(4);
-            taskIsCompleted = cursor.getInt(5) == 1 ? true : false;
-            taskIsDeleted = cursor.getInt(6) == 1 ? true : false;
-            taskCreatedDate = cursor.getString(7);
-            taskCompletedDate = cursor.getString(8);
-            taskParentID = cursor.getInt(9);
-
-            returnTask = new TaskModel(taskID, taskName, taskShortDescription, taskLongDescription,
-                        taskDeadLine, taskIsCompleted, taskIsDeleted, taskCreatedDate, taskCompletedDate, taskParentID);
-
+            returnTask = getTaskFromCursor(cursor);
         }
 
         cursor.close();
         db.close();
 
         return returnTask;
+    }
+
+
+
+    @NonNull
+    private static TaskModel getTaskFromCursor(Cursor cursor) {
+        int taskID, taskParentID;
+        String taskName, taskShortDescription, taskLongDescription, taskDeadLine, taskCreatedDate, taskCompletedDate;
+        Boolean taskIsCompleted, taskIsDeleted;
+
+        taskID = cursor.getInt(0);
+        taskName = cursor.getString(1);
+        taskShortDescription = cursor.getString(2);
+        taskLongDescription = cursor.getString(3);
+        taskDeadLine = cursor.getString(4);
+        taskIsCompleted = cursor.getInt(5) == 1 ? true : false;
+        taskIsDeleted = cursor.getInt(6) == 1 ? true : false;
+        taskCreatedDate = cursor.getString(7);
+        taskCompletedDate = cursor.getString(8);
+        taskParentID = cursor.getInt(9);
+
+        TaskModel task = new TaskModel(taskID, taskName, taskShortDescription, taskLongDescription,
+                taskDeadLine, taskIsCompleted, taskIsDeleted, taskCreatedDate, taskCompletedDate, taskParentID);
+        return task;
     }
 
 }
