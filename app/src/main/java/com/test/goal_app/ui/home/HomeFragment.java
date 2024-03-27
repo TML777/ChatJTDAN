@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.test.goal_app.R;
 import com.test.goal_app.TaskDataBaseHelper;
-import com.test.goal_app.list_adapter.HomeListAdapter;
+import com.test.goal_app.list_adapter.MainListAdapter;
 import com.test.goal_app.AddTask;
 import com.test.goal_app.databinding.FragmentHomeBinding;
 
@@ -28,7 +26,7 @@ public class HomeFragment extends Fragment {
 
     ListView lv_mainTasksList;
 
-    HomeListAdapter homeListAdapter;
+    MainListAdapter mainListAdapter;
 
     TaskDataBaseHelper db;
 
@@ -49,8 +47,8 @@ public class HomeFragment extends Fragment {
         lv_mainTasksList = root.findViewById(R.id.lv_mainTasksList);
         btn_openAddTaskPage = root.findViewById(R.id.btn_openAddTaskPage);
 
-        homeListAdapter = new HomeListAdapter(getContext(),R.layout.home_list_row,db.getAllMain());
-        lv_mainTasksList.setAdapter(homeListAdapter);
+        mainListAdapter = new MainListAdapter(getContext(),R.layout.home_list_row,db.getAllMain(), "Home");
+        lv_mainTasksList.setAdapter(mainListAdapter);
 
 
 

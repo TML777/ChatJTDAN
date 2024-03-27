@@ -24,16 +24,25 @@ import java.util.ArrayList;
 
 //Adapter for task list for display
 
-public class HomeListAdapter extends ArrayAdapter<TaskModel> {
+public class MainListAdapter extends ArrayAdapter<TaskModel> {
 
     private Context mContext;
     private int mResourse;
+    private String backString;
 
 
-    public HomeListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<TaskModel> objects) {
+    public MainListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<TaskModel> objects) {
         super(context, resource, objects);
         this.mContext = context;
         this.mResourse = resource;
+        backString = null;
+    }
+
+    public MainListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<TaskModel> objects, String backString) {
+        super(context, resource, objects);
+        this.mContext = context;
+        this.mResourse = resource;
+        this.backString = backString;
     }
 
     @NonNull
@@ -63,7 +72,8 @@ public class HomeListAdapter extends ArrayAdapter<TaskModel> {
                 db.updateTask(temp);
                 Intent intent = new Intent(mContext, MainActivity.class);
                 //Testing opening specific fragments
-//                intent.putExtra("fragToOpen", "Calendar");
+                if(!backString.equals(null))
+                    intent.putExtra("fragToOpen", backString);
                 mContext.startActivity(intent);
             }
         });

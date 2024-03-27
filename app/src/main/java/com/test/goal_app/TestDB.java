@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.test.goal_app.list_adapter.HomeListAdapter;
+import com.test.goal_app.list_adapter.MainListAdapter;
 
 public class TestDB extends AppCompatActivity {
 
@@ -17,7 +17,7 @@ public class TestDB extends AppCompatActivity {
 
     ListView lv_mainTasksList;
 
-    HomeListAdapter homeListAdapter;
+    MainListAdapter mainListAdapter;
 
     TaskDataBaseHelper db;
 
@@ -38,8 +38,8 @@ public class TestDB extends AppCompatActivity {
 //        taskArrayAdapter = new ArrayAdapter<TaskModel>(TestDB.this, android.R.layout.simple_list_item_1, db.getEveryone());
 //        lv_mainTasksList.setAdapter(taskArrayAdapter);
 
-        homeListAdapter = new HomeListAdapter(this,R.layout.home_list_row,db.getEveryone());
-        lv_mainTasksList.setAdapter(homeListAdapter);
+        mainListAdapter = new MainListAdapter(this,R.layout.home_list_row,db.getEveryone());
+        lv_mainTasksList.setAdapter(mainListAdapter);
 
 
         lv_mainTasksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

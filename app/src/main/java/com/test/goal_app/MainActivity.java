@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -12,16 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.test.goal_app.databinding.ActivityMainBinding;
 import com.test.goal_app.ui.calendar.CalendarFragment;
 import com.test.goal_app.ui.dashboard.DashboardFragment;
 import com.test.goal_app.ui.home.HomeFragment;
-import com.test.goal_app.ui.notifications.NotificationsFragment;
+import com.test.goal_app.ui.statistics.StatisticsFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -58,7 +53,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         String fragToOpen = intent.getStringExtra("fragToOpen");
         if(fragToOpen != null)
         {
-            if(fragToOpen.equals("Calendar"))
+            if(fragToOpen.equals("Home"))
+            {
+                navView.setSelectedItemId(R.id.navigation_home);
+            }
+            else if(fragToOpen.equals("Calendar"))
             {
                 navView.setSelectedItemId(R.id.navigation_calendar);
             }
@@ -87,8 +86,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 replaceFragment(new DashboardFragment());
                 return true;
             }
-            else if (itemId == R.id.navigation_notifications) {
-                replaceFragment(new NotificationsFragment());
+            else if (itemId == R.id.navigation_statistics) {
+                replaceFragment(new StatisticsFragment());
                 return true;
             }
             else if (itemId == R.id.navigation_home) {

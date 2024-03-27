@@ -13,16 +13,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.test.goal_app.R;
+import com.test.goal_app.TaskDataBaseHelper;
 import com.test.goal_app.databinding.FragmentCalendarBinding;
+import com.test.goal_app.list_adapter.MainListAdapter;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
 
@@ -34,6 +39,10 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     private View root;
     private Button btn_nextMonth;
     private Button btn_prevMonth;
+    private ListView lv_selectedDateList;
+    private MainListAdapter mainListAdapter;
+    private TaskDataBaseHelper db;
+
 
 
 
@@ -48,6 +57,9 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
 
         btn_nextMonth = root.findViewById(R.id.btn_nextMonth);
         btn_prevMonth = root.findViewById(R.id.btn_prevMonth);
+        lv_selectedDateList = root.findViewById(R.id.lv_selectedDateList);
+
+        db = new TaskDataBaseHelper(getContext());
 
         btn_nextMonth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,8 +156,19 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     {
         if(!dayText.equals(""))
         {
-            String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
-            Toast.makeText(root.getContext(), message, Toast.LENGTH_LONG).show();
+//            String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
+//            Toast.makeText(root.getContext(), message, Toast.LENGTH_LONG).show();
+
+            SimpleDateFormat df2 = new SimpleDateFormat("MM/dd/yy");
+            String selDate = df2.format(new Date(dayText + " " + monthYearFromDate(selectedDate)));
+
+            mainListAdapter = new MainListAdapter(getContext(),R.layout.home_list_row,db.getAllMainOnDate(selDate), "Calendar");
+            lv_selectedDateList.setAdapter(mainListAdapter);
+
+            if(mainListAdapter.isEmpty())
+            {
+                Toast.makeText(root.getContext(), "empty on " + selDate, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
