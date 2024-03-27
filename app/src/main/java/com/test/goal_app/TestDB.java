@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.test.goal_app.list_adapter.MainListAdapter;
+
 
 public class TestDB extends AppCompatActivity {
 
@@ -16,7 +18,8 @@ public class TestDB extends AppCompatActivity {
 
     ListView lv_mainTasksList;
 
-    TaskListAdapter taskListAdapter;
+    MainListAdapter mainListAdapter;
+
 
     TaskDataBaseHelper db;
 
@@ -29,7 +32,9 @@ public class TestDB extends AppCompatActivity {
         setContentView(R.layout.activity_test_db);
 
 
-        btn_openAddTaskPage = findViewById(R.id.btn_openAddTaskPage);
+
+        //btn_openAddTaskPage = findViewById(R.id.btn_openAddTaskPage);
+
         lv_mainTasksList = findViewById(R.id.lv_mainTasksList);
 
         db = new TaskDataBaseHelper(TestDB.this);
@@ -37,8 +42,9 @@ public class TestDB extends AppCompatActivity {
 //        taskArrayAdapter = new ArrayAdapter<TaskModel>(TestDB.this, android.R.layout.simple_list_item_1, db.getEveryone());
 //        lv_mainTasksList.setAdapter(taskArrayAdapter);
 
-        taskListAdapter = new TaskListAdapter(this,R.layout.task_list_row ,db.getEveryone());
-        lv_mainTasksList.setAdapter(taskListAdapter);
+        mainListAdapter = new MainListAdapter(this,R.layout.home_list_row,db.getEveryone());
+        lv_mainTasksList.setAdapter(mainListAdapter);
+
 
 
         lv_mainTasksList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,7 +70,8 @@ public class TestDB extends AppCompatActivity {
     //add task page funcion
     private void openAddTaskPage()
     {
-        Intent intent = new Intent(this, TestDBAddTask.class);
+        Intent intent = new Intent(this, AddTask.class);
+
         startActivity(intent);
     }
 

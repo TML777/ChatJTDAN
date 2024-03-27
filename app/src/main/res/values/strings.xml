@@ -2,10 +2,15 @@
     <string name="app_name">GOAL_APP</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_statistics">Statistics</string>
     <string name="Add">Add</string>
     <string name="Back">Back</string>
     <string name="BackButton"><![CDATA[<]]></string>
     <string name="EnterTaskName">Enter Task Name:</string>
     <string name="Update">Update</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="calendarBackBtn"><![CDATA[<-]]></string>
+    <string name="calendarFowardBtn"><![CDATA[->]]></string>
 </resources>

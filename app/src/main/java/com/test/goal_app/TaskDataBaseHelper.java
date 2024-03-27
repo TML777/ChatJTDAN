@@ -6,10 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class TaskDataBaseHelper extends SQLiteOpenHelper {
 
@@ -22,9 +23,11 @@ public class TaskDataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LONG_DESCRIPTION = "LONG_DESCRIPTION";
     public static final String COLUMN_DEAD_LINE_DATE = "DEAD_LINE_DATE";
     public static final String COLUMN_IS_COMPLETED = "IS_COMPLETED";
+    public static final String COLUMN_IS_DELETED = "IS_DELETED";
     public static final String COLUMN_CREATED_DATE = "CREATED_DATE";
     public static final String COLUMN_COMPETED_DATE = "COMPLETED_DATE";
     public static final String COLUMN_PARENT_TASK_ID = "PARENT_TASK_ID";
+
 
 
     public TaskDataBaseHelper(@Nullable Context context) {
@@ -42,6 +45,7 @@ public class TaskDataBaseHelper extends SQLiteOpenHelper {
                 COLUMN_LONG_DESCRIPTION + " TEXT, " +
                 COLUMN_DEAD_LINE_DATE + " TEXT, " +
                 COLUMN_IS_COMPLETED + " BOOL, " +
+                COLUMN_IS_DELETED + " BOOL, " +
                 COLUMN_CREATED_DATE + " TEXT, " +
                 COLUMN_COMPETED_DATE + " TEXT, " +
                 COLUMN_PARENT_TASK_ID + " INTEGER,  " +
@@ -69,6 +73,7 @@ public class TaskDataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_LONG_DESCRIPTION, newTask.getLongDescription());
         cv.put(COLUMN_DEAD_LINE_DATE, newTask.getDeadlineDate());
         cv.put(COLUMN_IS_COMPLETED, newTask.getCompleted());
+        cv.put(COLUMN_IS_DELETED, newTask.getDeleted());
         cv.put(COLUMN_CREATED_DATE, newTask.getCreatedDate());
         cv.put(COLUMN_COMPETED_DATE, newTask.getCompletedDate());
         cv.put(COLUMN_PARENT_TASK_ID, newTask.getParentTaskID());
@@ -99,6 +104,7 @@ public class TaskDataBaseHelper extends SQLiteOpenHelper {
                 COLUMN_LONG_DESCRIPTION + " = \'" + newTask.getLongDescription() + "\', " +
                 COLUMN_DEAD_LINE_DATE + " = \'" + newTask.getDeadlineDate() + "\', " +
                 COLUMN_IS_COMPLETED + " = " + newTask.getCompleted() + ", " +
+                COLUMN_IS_DELETED + " = " + newTask.getDeleted() + ", " +
                 COLUMN_CREATED_DATE + " = \'" + newTask.getCreatedDate() + "\', " +
                 COLUMN_COMPETED_DATE + " = \'" + newTask.getCompletedDate() + "\', " +
                 COLUMN_PARENT_TASK_ID + " = " + newTask.getParentTaskID() +
@@ -115,34 +121,58 @@ public class TaskDataBaseHelper extends SQLiteOpenHelper {
 
     // returns ArrayList of all tasks
     public ArrayList<TaskModel> getEveryone() {
-
-        ArrayList<TaskModel> returnList = new ArrayList<>();
-
-        int taskID, taskParentID;
-        String taskName, taskShortDescription, taskLongDescription, taskDeadLine, taskCreatedDate, taskCompletedDate;
-        Boolean taskIsCompleted;
-
         String queryString = "SELECT * FROM " + TASK_TABLE;
 
+        return getAllFromQueryString(queryString);
+
+    }
+
+
+    public ArrayList<TaskModel> getAllMain() {
+        String queryString = "SELECT * FROM " + TASK_TABLE
+                + " WHERE " + COLUMN_IS_COMPLETED + " = 0 AND " + COLUMN_IS_DELETED + " = 0 AND " + COLUMN_PARENT_TASK_ID + " = -1";
+
+        return getAllFromQueryString(queryString);
+    }
+
+    public ArrayList<TaskModel> getAllMainOnDate(String selectedDate) {
+        String queryString = "SELECT * FROM " + TASK_TABLE
+                + " WHERE " + COLUMN_IS_COMPLETED + " = 0 AND "
+                + COLUMN_IS_DELETED + " = 0 AND "
+                + COLUMN_DEAD_LINE_DATE + " = \'" + selectedDate + "\' AND "
+                + COLUMN_PARENT_TASK_ID + " = -1";
+
+        return getAllFromQueryString(queryString);
+    }
+
+    public ArrayList<TaskModel> getAllDeleted() {
+        String queryString = "SELECT * FROM " + TASK_TABLE
+                + " WHERE " + COLUMN_IS_DELETED + " = 1";
+
+        return getAllFromQueryString(queryString);
+    }
+
+    public ArrayList<TaskModel> getAllCompleted() {
+        String queryString = "SELECT * FROM " + TASK_TABLE
+                + " WHERE " + COLUMN_IS_COMPLETED + " = 1";
+
+        return getAllFromQueryString(queryString);
+    }
+
+
+    @NonNull
+    private ArrayList<TaskModel> getAllFromQueryString(String queryString) {
+        ArrayList<TaskModel> returnList = new ArrayList<>();
+
         SQLiteDatabase db = this.getReadableDatabase();
+        TaskModel task;
 
         Cursor cursor = db.rawQuery(queryString, null);
 
         if(cursor.moveToFirst()){
 
             do{
-                taskID = cursor.getInt(0);
-                taskName = cursor.getString(1);
-                taskShortDescription = cursor.getString(2);
-                taskLongDescription = cursor.getString(3);
-                taskDeadLine = cursor.getString(4);
-                taskIsCompleted = cursor.getInt(5) == 1 ? true : false;
-                taskCreatedDate = cursor.getString(6);
-                taskCompletedDate = cursor.getString(7);
-                taskParentID = cursor.getInt(8);
-
-                TaskModel task = new TaskModel(taskID, taskName, taskShortDescription, taskLongDescription,
-                        taskDeadLine, taskIsCompleted, taskCreatedDate, taskCompletedDate, taskParentID);
+                task = getTaskFromCursor(cursor);
 
                 returnList.add(task);
 
@@ -153,45 +183,55 @@ public class TaskDataBaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return returnList;
-
     }
+
+
 
 
     // Gets from data base with id number
     public TaskModel getByID(int id){
         TaskModel returnTask = null;
 
-        int taskID, taskParentID;
-        String taskName, taskShortDescription, taskLongDescription, taskDeadLine, taskCreatedDate, taskCompletedDate;
-        Boolean taskIsCompleted;
+        String queryString = "SELECT * FROM " + TASK_TABLE
+                + " WHERE " + COLUMN_ID + " = " + id + ";";
 
-        String queryString = "SELECT * FROM " + TASK_TABLE + " WHERE " + COLUMN_ID + " = " + id + ";";
 
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(queryString, null);
 
         if(cursor.moveToFirst()){
-
-            taskID = cursor.getInt(0);
-            taskName = cursor.getString(1);
-            taskShortDescription = cursor.getString(2);
-            taskLongDescription = cursor.getString(3);
-            taskDeadLine = cursor.getString(4);
-            taskIsCompleted = cursor.getInt(5) == 1 ? true : false;
-            taskCreatedDate = cursor.getString(6);
-            taskCompletedDate = cursor.getString(7);
-            taskParentID = cursor.getInt(8);
-
-            returnTask = new TaskModel(taskID, taskName, taskShortDescription, taskLongDescription,
-                        taskDeadLine, taskIsCompleted, taskCreatedDate, taskCompletedDate, taskParentID);
-
+            returnTask = getTaskFromCursor(cursor);
         }
 
         cursor.close();
         db.close();
 
         return returnTask;
+    }
+
+
+
+    @NonNull
+    private static TaskModel getTaskFromCursor(Cursor cursor) {
+        int taskID, taskParentID;
+        String taskName, taskShortDescription, taskLongDescription, taskDeadLine, taskCreatedDate, taskCompletedDate;
+        Boolean taskIsCompleted, taskIsDeleted;
+
+        taskID = cursor.getInt(0);
+        taskName = cursor.getString(1);
+        taskShortDescription = cursor.getString(2);
+        taskLongDescription = cursor.getString(3);
+        taskDeadLine = cursor.getString(4);
+        taskIsCompleted = cursor.getInt(5) == 1 ? true : false;
+        taskIsDeleted = cursor.getInt(6) == 1 ? true : false;
+        taskCreatedDate = cursor.getString(7);
+        taskCompletedDate = cursor.getString(8);
+        taskParentID = cursor.getInt(9);
+
+        TaskModel task = new TaskModel(taskID, taskName, taskShortDescription, taskLongDescription,
+                taskDeadLine, taskIsCompleted, taskIsDeleted, taskCreatedDate, taskCompletedDate, taskParentID);
+        return task;
     }
 
 }

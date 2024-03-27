@@ -23,7 +23,6 @@ public class NotificationsFragment extends Fragment {
 
     View root;
 
-    Button btn_testButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -34,14 +33,7 @@ public class NotificationsFragment extends Fragment {
         root = binding.getRoot();
 
 
-        /// Button for to open new activity to test DataBase
-        btn_testButton = root.findViewById(R.id.btn_testButton);
-        btn_testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchTestDB();
-            }
-        });
+
 
         final TextView textView = binding.textNotifications;
         notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);

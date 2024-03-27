@@ -16,7 +16,7 @@
             android:name=".TaskPage"
             android:exported="false" />
         <activity
-            android:name=".TestDBAddTask"
+            android:name=".AddTask"
             android:exported="false" />
         <activity
             android:name=".TestDB"
