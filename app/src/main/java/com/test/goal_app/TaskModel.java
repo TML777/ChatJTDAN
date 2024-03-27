@@ -21,6 +21,7 @@ public class TaskModel {
     public TaskModel(int id, String name, String shortDescription, String longDescription, String deadlineDate,
                      Boolean isCompleted, Boolean isDeleted, String createdDate, String completedDate, int parentTaskID){
 
+
         this.id = id;
         this.name = name;
         this.shortDescription = shortDescription;

@@ -23,6 +23,7 @@ public class NotificationsFragment extends Fragment {
 
     View root;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         NotificationsViewModel notificationsViewModel =
@@ -30,6 +31,7 @@ public class NotificationsFragment extends Fragment {
 
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         root = binding.getRoot();
+
 
 
 
@@ -43,4 +45,13 @@ public class NotificationsFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+
+    ////// Opens database activity
+    public void launchTestDB(){
+        Intent intent = new Intent(getActivity().getApplication(), TestDB.class);
+        startActivity(intent);
+
+    }
+
 }

@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+
 public class TaskDataBaseHelper extends SQLiteOpenHelper {
 
 
@@ -164,13 +165,14 @@ public class TaskDataBaseHelper extends SQLiteOpenHelper {
         ArrayList<TaskModel> returnList = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
+        TaskModel task;
 
         Cursor cursor = db.rawQuery(queryString, null);
 
         if(cursor.moveToFirst()){
 
             do{
-                TaskModel task = getTaskFromCursor(cursor);
+                task = getTaskFromCursor(cursor);
 
                 returnList.add(task);
 
@@ -185,12 +187,14 @@ public class TaskDataBaseHelper extends SQLiteOpenHelper {
 
 
 
+
     // Gets from data base with id number
     public TaskModel getByID(int id){
         TaskModel returnTask = null;
 
         String queryString = "SELECT * FROM " + TASK_TABLE
                 + " WHERE " + COLUMN_ID + " = " + id + ";";
+
 
         SQLiteDatabase db = this.getReadableDatabase();
 
