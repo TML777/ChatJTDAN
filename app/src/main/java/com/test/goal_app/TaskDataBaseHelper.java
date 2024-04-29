@@ -145,6 +145,18 @@ public class TaskDataBaseHelper extends SQLiteOpenHelper {
         return getAllFromQueryString(queryString);
     }
 
+
+    public ArrayList<TaskModel> getMainByMonth(String selectedMonth) {
+        String queryString = "SELECT * FROM " + TASK_TABLE
+                + " WHERE " + COLUMN_IS_COMPLETED + " = 0 AND "
+                + COLUMN_IS_DELETED + " = 0 AND "
+                + COLUMN_DEAD_LINE_DATE + " LIKE \'" + selectedMonth + "\' AND "
+                + COLUMN_PARENT_TASK_ID + " = -1";
+
+        return getAllFromQueryString(queryString);
+    }
+
+
     public ArrayList<TaskModel> getAllDeleted() {
         String queryString = "SELECT * FROM " + TASK_TABLE
                 + " WHERE " + COLUMN_IS_DELETED + " = 1";

@@ -14,11 +14,14 @@ import java.util.ArrayList;
 class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
 {
     private final ArrayList<String> daysOfMonth;
+    private final ArrayList<Boolean> daysWithTask;
     private final OnItemListener onItemListener;
 
-    public CalendarAdapter(ArrayList<String> daysOfMonth, OnItemListener onItemListener)
+
+    public CalendarAdapter(ArrayList<String> daysOfMonth, ArrayList<Boolean> daysWithTask, OnItemListener onItemListener)
     {
         this.daysOfMonth = daysOfMonth;
+        this.daysWithTask = daysWithTask;
         this.onItemListener = onItemListener;
     }
 
@@ -37,7 +40,13 @@ class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position)
     {
         holder.dayOfMonth.setText(daysOfMonth.get(position));
+        if(daysWithTask.get(position))
+            holder.hasTask.setVisibility(View.VISIBLE);
+        else
+            holder.hasTask.setVisibility(View.INVISIBLE);
     }
+
+
 
     @Override
     public int getItemCount()

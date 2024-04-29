@@ -17,17 +17,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.test.goal_app.AddTask;
 import com.test.goal_app.R;
 import com.test.goal_app.TaskDataBaseHelper;
+import com.test.goal_app.TaskModel;
 import com.test.goal_app.databinding.FragmentCalendarBinding;
 import com.test.goal_app.list_adapter.MainListAdapter;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 public class CalendarFragment extends Fragment implements CalendarAdapter.OnItemListener{
 
@@ -41,6 +45,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     private Button btn_prevMonth;
     private ListView lv_selectedDateList;
     private MainListAdapter mainListAdapter;
+
     private TaskDataBaseHelper db;
 
 
@@ -103,11 +108,114 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         monthYearText.setText(monthYearFromDate(selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
 
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
+        ArrayList<Boolean> hasTask = hasTaskArray(selectedDate, daysInMonth);
+
+        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, hasTask,this);
+
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(root.getContext(), 7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
     }
+
+
+    private ArrayList<Boolean> hasTaskArray(LocalDate date, ArrayList<String> daysInMonth)
+    {
+//        ArrayList<Boolean> hasTask = new ArrayList<>();
+//        boolean[] taskDate = new boolean[31];
+//        TaskModel tempTask;
+//        String deadLineDate;
+//        String tempDayInMonth;
+//        int day;
+//
+//        SimpleDateFormat df1 = new SimpleDateFormat("MM");
+//        String formatedMonth = df1.format(date);
+//
+//        SimpleDateFormat df2 = new SimpleDateFormat("YY");
+//        String formatedYear = df2.format(date);
+//
+//        ArrayList<TaskModel> taskList = db.getAllMain();
+//
+//        Iterator it = taskList.iterator();
+//
+//        while(it.hasNext())
+//        {
+//            tempTask = (TaskModel) it.next();
+//            deadLineDate = tempTask.getDeadlineDate();
+//
+//            String[] parts = deadLineDate.split("/");
+//
+//            day = Integer.parseInt(parts[1]);
+//
+//            taskDate[day] = true;
+//
+//        }
+//
+//        it = daysInMonth.iterator();
+//
+//        while(it.hasNext()){
+//            tempDayInMonth = (String) it.next();
+//
+//            if(!tempDayInMonth.equals(""))
+//            {
+//                day = Integer.parseInt(tempDayInMonth);
+//                if(taskDate[day])
+//                    hasTask.add(true);
+//                else
+//                    hasTask.add(false);
+//            }
+//            else
+//                hasTask.add(false);
+//        }
+//
+
+        boolean[] taskDate = new boolean[date.lengthOfMonth()]; // Adjust array size based on the month
+        TaskModel tempTask;
+        String deadLineDate;
+
+        SimpleDateFormat df1 = new SimpleDateFormat("MM");
+        String formatedMonth = df1.format(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
+        SimpleDateFormat df2 = new SimpleDateFormat("yy"); // Change 'YY' to 'yy'
+        String formatedYear = df2.format(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+
+        ArrayList<TaskModel> taskList = db.getMainByMonth(formatedMonth + "/%/" + formatedYear);
+
+        for (TaskModel task : taskList) { // Using enhanced for-loop for better readability
+            deadLineDate = task.getDeadlineDate();
+            String[] parts = deadLineDate.split("/");
+
+            if (parts.length > 1) {
+                int day = Integer.parseInt(parts[1]) - 1; // Array is 0-indexed
+                if (day >= 0 && day < taskDate.length) {
+                    taskDate[day] = true;
+                }
+            }
+        }
+
+        ArrayList<Boolean> hasTask = new ArrayList<>();
+
+        Iterator it = daysInMonth.iterator();
+
+        for (String tempDayInMonth : daysInMonth) {
+            if (!tempDayInMonth.equals("")) {
+                int day = Integer.parseInt(tempDayInMonth) - 1;
+                if (day >= 0 && day < taskDate.length && taskDate[day]) {
+                    hasTask.add(true);
+                } else {
+                    hasTask.add(false);
+                }
+            } else {
+                hasTask.add(false);
+            }
+        }
+
+        //Toast.makeText( getContext(), "formatedDate", Toast.LENGTH_SHORT).show();
+
+
+        return hasTask;
+    }
+
+
 
     private ArrayList<String> daysInMonthArray(LocalDate date)
     {
