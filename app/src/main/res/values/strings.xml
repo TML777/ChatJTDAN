@@ -13,4 +13,5 @@
     <string name="title_calendar">Calendar</string>
     <string name="calendarBackBtn"><![CDATA[<-]]></string>
     <string name="calendarFowardBtn"><![CDATA[->]]></string>
+    <string name="addsubtask">Add Subtask</string>
 </resources>

@@ -2,26 +2,38 @@ package com.test.goal_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+
+import com.test.goal_app.list_adapter.MainListAdapter;
+
+import kotlinx.coroutines.scheduling.Task;
 
 //// TaskPage displays a specific task
 
 public class TaskPage extends AppCompatActivity {
 
-    Button btn_taskPageBack, btn_editTask, btn_saveEdits;
+    Button btn_taskPageBack, btn_editTask, btn_saveEdits, bt_addSubtask;
     EditText et_name, et_shortDescription, et_longDescription, et_deadLine;
+    ListView lv_subTaskList;
 
     TaskDataBaseHelper db;
+
+    MainListAdapter mainListAdapter;
+
+    String backString;
 
     TaskModel task;
 
     int taskID;
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +41,7 @@ public class TaskPage extends AppCompatActivity {
 
         Intent intent = getIntent();
         taskID = intent.getIntExtra("taskID", 0);
+        backString = intent.getStringExtra("BackString");
 
 
         btn_taskPageBack = findViewById(R.id.btn_taskPageBack);
@@ -38,11 +51,21 @@ public class TaskPage extends AppCompatActivity {
         et_longDescription = findViewById(R.id.et_longDescription);
         et_deadLine = findViewById(R.id.et_deadLine);
         btn_saveEdits = findViewById(R.id.btn_saveEdits);
+        bt_addSubtask = findViewById(R.id.bt_addSubtask);
+        lv_subTaskList = findViewById(R.id.lv_subTaskList);
+
+
 
         btn_saveEdits.setVisibility(View.GONE);
 
         db = new TaskDataBaseHelper(TaskPage.this);
         task = db.getByID(taskID);
+
+
+        mainListAdapter = new MainListAdapter(this,R.layout.home_list_row,db.getAllSubtask(taskID), "TaskPage");
+        mainListAdapter.parentTask = taskID;
+        lv_subTaskList.setAdapter(mainListAdapter);
+
 
         if(task != null)
         {
@@ -102,22 +125,50 @@ public class TaskPage extends AppCompatActivity {
             }
         });
 
+        bt_addSubtask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAddTask();
+            }
+        });
+
 
 
         // goes back to task list page
         btn_taskPageBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                backAction();
 
             }
         });
     }
 
 
-    // function to go back to task list page
-    public void openTaskList(){
-        Intent intent = new Intent(this, TestDB.class);
+    public void openAddTask(){
+        Intent intent = new Intent(this, AddTask.class);
+        intent.putExtra("parentTask", taskID);
+        intent.putExtra("BackString",backString);
         startActivity(intent);
+    }
+
+
+    // function to go back to task list page
+    public void backAction(){
+
+        if(task.getParentTaskID() == -1)
+        {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("fragToOpen", backString);
+            startActivity(intent);
+        }
+        else
+        {
+            Intent intent = new Intent(this, TaskPage.class);
+            intent.putExtra("taskID", task.getParentTaskID());
+            startActivity(intent);
+        }
+
+
     }
 }

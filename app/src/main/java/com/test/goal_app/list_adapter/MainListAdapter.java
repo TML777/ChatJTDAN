@@ -29,13 +29,15 @@ public class MainListAdapter extends ArrayAdapter<TaskModel> {
     private Context mContext;
     private int mResourse;
     private String backString;
+    public int parentTask;
 
 
     public MainListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<TaskModel> objects) {
         super(context, resource, objects);
         this.mContext = context;
         this.mResourse = resource;
-        backString = null;
+        backString = "Home";
+        parentTask = -1;
     }
 
     public MainListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<TaskModel> objects, String backString) {
@@ -70,11 +72,23 @@ public class MainListAdapter extends ArrayAdapter<TaskModel> {
                 TaskModel temp = getItem(position);
                 temp.setDeleted(true);
                 db.updateTask(temp);
-                Intent intent = new Intent(mContext, MainActivity.class);
+
                 //Testing opening specific fragments
-                if(!backString.equals(null))
-                    intent.putExtra("fragToOpen", backString);
-                mContext.startActivity(intent);
+                if(!backString.equals(null)){
+                    if(backString.equals("TaskPage"))
+                    {
+                        Intent intent = new Intent(mContext, TaskPage.class);
+                        intent.putExtra("taskID", parentTask);
+                        mContext.startActivity(intent);
+                    }
+                    else
+                    {
+                        Intent intent = new Intent(mContext, MainActivity.class);
+                        intent.putExtra("fragToOpen", backString);
+                        mContext.startActivity(intent);
+                    }
+                }
+
             }
         });
 
@@ -107,6 +121,7 @@ public class MainListAdapter extends ArrayAdapter<TaskModel> {
     {
         Intent intent = new Intent(mContext, TaskPage.class);
         intent.putExtra("taskID", taskModel.getId());
+        intent.putExtra("BackString",backString);
         mContext.startActivity(intent);
     }
 

@@ -84,6 +84,8 @@ public class HomeFragment extends Fragment {
     private void openAddTaskPage()
     {
         Intent intent = new Intent(getActivity().getApplication(), AddTask.class);
+        intent.putExtra("parentTask", -1);
+        intent.putExtra("BackString","Home");
         startActivity(intent);
     }
 /*

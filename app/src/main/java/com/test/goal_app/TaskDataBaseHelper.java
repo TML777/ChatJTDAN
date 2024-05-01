@@ -135,6 +135,13 @@ public class TaskDataBaseHelper extends SQLiteOpenHelper {
         return getAllFromQueryString(queryString);
     }
 
+    public ArrayList<TaskModel> getAllSubtask(int parentID) {
+        String queryString = "SELECT * FROM " + TASK_TABLE
+                + " WHERE " + COLUMN_IS_COMPLETED + " = 0 AND " + COLUMN_IS_DELETED + " = 0 AND " + COLUMN_PARENT_TASK_ID + " = " + parentID;
+
+        return getAllFromQueryString(queryString);
+    }
+
     public ArrayList<TaskModel> getAllMainOnDate(String selectedDate) {
         String queryString = "SELECT * FROM " + TASK_TABLE
                 + " WHERE " + COLUMN_IS_COMPLETED + " = 0 AND "

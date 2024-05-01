@@ -28,6 +28,9 @@ public class AddTask extends AppCompatActivity {
     TaskModel taskModel;
     long deadLineDateMilli;
 
+    int parentTask;
+    String backString;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,12 @@ public class AddTask extends AppCompatActivity {
         cv_addCalendar = findViewById(R.id.cv_addCalendar);
 
         db = new TaskDataBaseHelper(AddTask.this);
+
+
+        Intent intent = getIntent();
+        parentTask = intent.getIntExtra("parentTask", -1);
+        backString = intent.getStringExtra("BackString");
+
 
 //        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 //        LocalDateTime now = LocalDateTime.now();
@@ -87,13 +96,13 @@ public class AddTask extends AppCompatActivity {
 
                     taskModel = new TaskModel(-1, et_addTaskName.getText().toString(), et_addShortDesc.getText().toString(),
                             et_addLongDesc.getText().toString(), formatedDate,
-                            false, false, df2.format(new Date()), "none", -1);
+                            false, false, df2.format(new Date()), "none", parentTask);
                     Toast.makeText( AddTask.this, taskModel.toString() + " " + df2.format(new Date()), Toast.LENGTH_SHORT).show();
                 }
                 catch (Exception e){
                     Toast.makeText( AddTask.this, "Error creating customer", Toast.LENGTH_SHORT).show();
                     taskModel = new TaskModel(-1, "error", "error", "error",
-                            "error", false, false,  "error", "error",-1);
+                            "error", false, false,  "error", "error",parentTask);
 
                 }
                 TaskDataBaseHelper dataBaseHelper = new TaskDataBaseHelper(AddTask.this);
@@ -115,12 +124,25 @@ public class AddTask extends AppCompatActivity {
                 finish();
             }
         });
+
     }
+
 
     // back to task list function
     public void openTaskList(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        if(parentTask == -1)
+        {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("fragToOpen", backString);
+            startActivity(intent);
+        }
+        else
+        {
+            Intent intent = new Intent(this, TaskPage.class);
+            intent.putExtra("taskID", parentTask);
+            intent.putExtra("BackString",backString);
+            startActivity(intent);
+        }
     }
 
 
