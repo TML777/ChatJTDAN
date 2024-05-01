@@ -194,7 +194,6 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
 
         ArrayList<Boolean> hasTask = new ArrayList<>();
 
-        Iterator it = daysInMonth.iterator();
 
         for (String tempDayInMonth : daysInMonth) {
             if (!tempDayInMonth.equals("")) {
