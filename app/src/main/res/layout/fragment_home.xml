@@ -6,29 +6,58 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingBottom="55dp"
+    android:background="@color/backgroundGreen"
     tools:context=".ui.home.HomeFragment">
 
-    <Button
-        android:id="@+id/btn_openAddTaskPage"
-        android:layout_width="70dp"
-        android:layout_height="56dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="35dp"
-        android:text="@string/Add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
-    <ListView
-        android:id="@+id/lv_mainTasksList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+    <ImageView
+        android:id="@+id/iv_mainGoal"
+        android:layout_width="186dp"
+        android:layout_height="87dp"
+        android:src="@drawable/screenshot_2024_05_01_at_11_35_00am"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </ListView>
+
+    <FrameLayout
+        android:id="@+id/fl_mainList"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/completed_background"
+        app:layout_constraintHorizontal_bias="0.843"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_mainGoal">
+
+        <ListView
+            android:id="@+id/lv_mainTasksList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </FrameLayout>
+
+    <ImageButton
+            android:id="@+id/btn_openAddTaskPage"
+            android:layout_width="70dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginBottom="35dp"
+            android:src="@drawable/add"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

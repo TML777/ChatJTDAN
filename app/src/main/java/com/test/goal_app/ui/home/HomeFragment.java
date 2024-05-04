@@ -1,11 +1,13 @@
 package com.test.goal_app.ui.home;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +24,7 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
-    Button btn_openAddTaskPage;
+    ImageButton btn_openAddTaskPage;
 
     ListView lv_mainTasksList;
 
@@ -31,6 +33,7 @@ public class HomeFragment extends Fragment {
     TaskDataBaseHelper db;
 
 
+    @SuppressLint("WrongViewCast")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =

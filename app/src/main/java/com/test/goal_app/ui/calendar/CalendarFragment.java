@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
     private Button btn_prevMonth;
     private ListView lv_selectedDateList;
     private MainListAdapter mainListAdapter;
+    private FrameLayout fl_calendarList;
 
     private TaskDataBaseHelper db;
 
@@ -63,6 +65,9 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         btn_nextMonth = root.findViewById(R.id.btn_nextMonth);
         btn_prevMonth = root.findViewById(R.id.btn_prevMonth);
         lv_selectedDateList = root.findViewById(R.id.lv_selectedDateList);
+        fl_calendarList = root.findViewById(R.id.fl_calendarList);
+
+        fl_calendarList.setVisibility(View.INVISIBLE);
 
         db = new TaskDataBaseHelper(getContext());
 
@@ -269,8 +274,14 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
             SimpleDateFormat df2 = new SimpleDateFormat("MM/dd/yy");
             String selDate = df2.format(new Date(dayText + " " + monthYearFromDate(selectedDate)));
 
+
             mainListAdapter = new MainListAdapter(getContext(),R.layout.home_list_row,db.getAllMainOnDate(selDate), "Calendar");
             lv_selectedDateList.setAdapter(mainListAdapter);
+
+            if(mainListAdapter.isEmpty())
+                fl_calendarList.setVisibility(View.INVISIBLE);
+            else
+                fl_calendarList.setVisibility(View.VISIBLE);
 
             if(mainListAdapter.isEmpty())
             {

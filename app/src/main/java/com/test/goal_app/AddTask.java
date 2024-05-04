@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.text.ParseException;
@@ -18,7 +19,8 @@ import java.util.Date;
 
 public class AddTask extends AppCompatActivity {
 
-    Button btn_addTaskBack, btn_addTaskButton;
+    ImageButton btn_addTaskBack;
+    Button btn_addTaskButton;
     EditText et_addTaskName, et_addShortDesc, et_addLongDesc;
     CalendarView cv_addCalendar;
 
@@ -44,7 +46,10 @@ public class AddTask extends AppCompatActivity {
         et_addLongDesc = findViewById(R.id.et_addLongDesc);
         cv_addCalendar = findViewById(R.id.cv_addCalendar);
 
+        getSupportActionBar().hide();
+
         db = new TaskDataBaseHelper(AddTask.this);
+
 
 
         Intent intent = getIntent();

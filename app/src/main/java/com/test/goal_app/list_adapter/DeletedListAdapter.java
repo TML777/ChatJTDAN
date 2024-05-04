@@ -1,6 +1,7 @@
 package com.test.goal_app.list_adapter;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -56,6 +58,10 @@ public class DeletedListAdapter extends ArrayAdapter<TaskModel> {
     private Context mContext;
     private int mResourse;
 
+    TextView tv_rowName;
+    TextView tv_rowShortDescription;
+    ImageButton btn_listRecover;
+
 
     public DeletedListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<TaskModel> objects) {
         super(context, resource, objects);
@@ -63,6 +69,7 @@ public class DeletedListAdapter extends ArrayAdapter<TaskModel> {
         this.mResourse = resource;
     }
 
+    @SuppressLint("WrongViewCast")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -70,9 +77,9 @@ public class DeletedListAdapter extends ArrayAdapter<TaskModel> {
 
         convertView = layoutInflater.inflate(mResourse, parent, false);
 
-        TextView tv_rowName = convertView.findViewById(R.id.tv_rowName);
-        TextView tv_rowShortDescription = convertView.findViewById(R.id.tv_rowShortDescription);
-        Button btn_listRecover = convertView.findViewById(R.id.btn_listRecover);
+        tv_rowName = convertView.findViewById(R.id.tv_rowName);
+        tv_rowShortDescription = convertView.findViewById(R.id.tv_rowShortDescription);
+        btn_listRecover = convertView.findViewById(R.id.btn_listRecover);
 
         TaskDataBaseHelper db = new TaskDataBaseHelper(getContext());
 

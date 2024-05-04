@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".AddTask">
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_addTaskBack"
-        android:layout_width="61dp"
-        android:layout_height="42dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="@string/BackButton"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,6 +59,7 @@
 
     <CalendarView
         android:id="@+id/cv_addCalendar"
+        android:background="#C6D8AB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"

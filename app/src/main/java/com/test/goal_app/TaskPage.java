@@ -54,6 +54,8 @@ public class TaskPage extends AppCompatActivity {
         bt_addSubtask = findViewById(R.id.bt_addSubtask);
         lv_subTaskList = findViewById(R.id.lv_subTaskList);
 
+        getSupportActionBar().hide();
+
 
 
         btn_saveEdits.setVisibility(View.GONE);

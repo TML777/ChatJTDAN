@@ -23,13 +23,17 @@
         android:text="Short Description"
         />
 
-    <Button
+
+    <ImageButton
         android:id="@+id/btn_listDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="0dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="10dp"
         android:layout_toStartOf="@+id/btn_taskPage"
-        android:text="Delete" />
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/bin" />
 
     <CheckBox
         android:id="@+id/cb_isCompleted"
@@ -38,10 +42,14 @@
         android:layout_marginEnd="0dp"
         android:layout_toStartOf="@+id/btn_listDelete" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_taskPage"
-        android:layout_width="44dp"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="7dp"
+        android:src="@drawable/menu"
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="0dp"
         android:text=">" />

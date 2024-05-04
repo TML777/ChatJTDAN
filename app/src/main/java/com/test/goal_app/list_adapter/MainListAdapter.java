@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,14 @@ public class MainListAdapter extends ArrayAdapter<TaskModel> {
     private int mResourse;
     private String backString;
     public int parentTask;
+
+    TextView tv_rowName;
+    TextView tv_rowShortDescription;
+    ImageButton btn_listDelete;
+    ImageButton btn_taskPage;
+    CheckBox cb_isCompleted;
+
+
 
 
     public MainListAdapter(@NonNull Context context, int resource, @NonNull ArrayList<TaskModel> objects) {
@@ -54,11 +63,11 @@ public class MainListAdapter extends ArrayAdapter<TaskModel> {
 
         convertView = layoutInflater.inflate(mResourse,parent,false);
 
-        TextView tv_rowName = convertView.findViewById(R.id.tv_rowName);
-        TextView tv_rowShortDescription = convertView.findViewById(R.id.tv_rowShortDescription);
-        Button btn_listDelete = convertView.findViewById(R.id.btn_listDelete);
-        Button btn_taskPage = convertView.findViewById(R.id.btn_taskPage);
-        CheckBox cb_isCompleted = convertView.findViewById(R.id.cb_isCompleted);
+        tv_rowName = convertView.findViewById(R.id.tv_rowName);
+        tv_rowShortDescription = convertView.findViewById(R.id.tv_rowShortDescription);
+        btn_listDelete = convertView.findViewById(R.id.btn_listDelete);
+        btn_taskPage = convertView.findViewById(R.id.btn_taskPage);
+        cb_isCompleted = convertView.findViewById(R.id.cb_isCompleted);
 
         TaskDataBaseHelper db = new TaskDataBaseHelper(getContext());
 

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/backgroundGreen"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -126,10 +127,24 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"/>
 
-    <ListView
-        android:id="@+id/lv_selectedDateList"
+    <FrameLayout
+        android:id="@+id/fl_calendarList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="200dp"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/completed_background"
+        app:layout_constraintHorizontal_bias="0.843"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <ListView
+            android:id="@+id/lv_selectedDateList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+
 
 
 </LinearLayout>

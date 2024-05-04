@@ -23,12 +23,16 @@
         android:text="Short Description"
         />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_listRecover"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="0dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="7dp"
         android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/recover"
         android:text="Recover" />
 
 </RelativeLayout>
