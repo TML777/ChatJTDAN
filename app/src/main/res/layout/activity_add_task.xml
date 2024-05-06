@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundGreen"
     tools:context=".AddTask">
+
+
+
 
     <ImageButton
         android:id="@+id/btn_addTaskBack"
@@ -18,67 +22,127 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/et_addTaskName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:ems="10"
-        android:hint="@string/EnterTaskName"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/et_addShortDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="Enter Short Description:"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_addTaskName" />
-
-    <EditText
-        android:id="@+id/et_addLongDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:hint="Enter Long Description:"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_addShortDesc" />
-
-    <CalendarView
-        android:id="@+id/cv_addCalendar"
-        android:background="#C6D8AB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_addLongDesc" />
-
-    <Button
-        android:id="@+id/btn_addTaskButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/Add"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/iv_addGoalBanner"
+        android:layout_width="186dp"
+        android:layout_height="87dp"
+        android:src="@drawable/screenshot_2024_05_01_at_11_35_00am"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_addCalendar" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <FrameLayout
+        android:id="@+id/fl_addTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/green_border"
+        android:backgroundTint="#C6D8AB"
+        app:layout_constraintBottom_toTopOf="@+id/cv_addCalendar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_addGoalBanner">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/et_addTaskName"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:padding="16dp"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/green_border"
+                android:ems="10"
+                android:hint="@string/EnterTaskName"
+                android:inputType="text"
+                android:maxLength="15"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/TextAppearance.AppCompat.Title"/>
+
+            <EditText
+                android:id="@+id/et_addShortDesc"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="10dp"
+                android:maxLength="20"
+                android:background="@drawable/green_border"
+                android:padding="16dp"
+                android:ems="10"
+                android:hint="Enter Short Description:"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_addTaskName" />
+
+            <EditText
+                android:id="@+id/et_addLongDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/green_border"
+                android:ems="10"
+                android:gravity="top"
+                android:hint="Enter Long Description:"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:maxLines="5"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_addShortDesc" />
+
+
+        </LinearLayout>
+    </FrameLayout>
+
+
+    <CalendarView
+        android:id="@+id/cv_addCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/green_border"
+        android:backgroundTint="#C6D8AB"
+        app:layout_constraintBottom_toTopOf="@+id/btn_addTaskButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <Button
+        android:id="@+id/btn_addTaskButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginHorizontal="30dp"
+        android:backgroundTint="#C6D8AB"
+        android:text="Save"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

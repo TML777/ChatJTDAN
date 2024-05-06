@@ -1,5 +1,6 @@
 package com.test.goal_app;
 
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -96,28 +97,41 @@ public class AddTask extends AppCompatActivity {
                 df2 = new SimpleDateFormat("MM/dd/yy");
 
 
-                try{
-                    String formatedDate = df2.format(new Date(deadLineDateMilli));
+                String name = et_addTaskName.getText().toString();
+                if(name.isEmpty()) {
+                    et_addTaskName.setBackground(getDrawable(R.drawable.red_border));
 
-                    taskModel = new TaskModel(-1, et_addTaskName.getText().toString(), et_addShortDesc.getText().toString(),
-                            et_addLongDesc.getText().toString(), formatedDate,
-                            false, false, df2.format(new Date()), "none", parentTask);
-                    Toast.makeText( AddTask.this, taskModel.toString() + " " + df2.format(new Date()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText( AddTask.this, "Please name the task!", Toast.LENGTH_SHORT).show();
+
+                } else{
+                    et_addTaskName.setBackground(getDrawable(R.drawable.green_border));
+
+
+                    try{
+                        String formatedDate = df2.format(new Date(deadLineDateMilli));
+
+                        taskModel = new TaskModel(-1, et_addTaskName.getText().toString(), et_addShortDesc.getText().toString(),
+                                et_addLongDesc.getText().toString(), formatedDate,
+                                false, false, df2.format(new Date()), "none", parentTask);
+                        //Toast.makeText( AddTask.this, taskModel.toString() + " " + df2.format(new Date()), Toast.LENGTH_SHORT).show();
+                    }
+                    catch (Exception e){
+                        Toast.makeText( AddTask.this, "Error creating customer", Toast.LENGTH_SHORT).show();
+                        taskModel = new TaskModel(-1, "error", "error", "error",
+                                "error", false, false,  "error", "error",parentTask);
+
+                    }
+                    TaskDataBaseHelper dataBaseHelper = new TaskDataBaseHelper(AddTask.this);
+
+                    boolean success = dataBaseHelper.addOne(taskModel);
+
+                    if(success)
+                        Toast.makeText( AddTask.this, "Task Created!" + success, Toast.LENGTH_SHORT).show();
+
+                    // back to task list
+                    openTaskList();
                 }
-                catch (Exception e){
-                    Toast.makeText( AddTask.this, "Error creating customer", Toast.LENGTH_SHORT).show();
-                    taskModel = new TaskModel(-1, "error", "error", "error",
-                            "error", false, false,  "error", "error",parentTask);
 
-                }
-                TaskDataBaseHelper dataBaseHelper = new TaskDataBaseHelper(AddTask.this);
-
-                boolean success = dataBaseHelper.addOne(taskModel);
-
-                Toast.makeText( AddTask.this, "Success= " + success, Toast.LENGTH_SHORT).show();
-
-                // back to task list
-                openTaskList();
             }
         });
 
