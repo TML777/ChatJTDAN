@@ -2,12 +2,14 @@ package com.test.goal_app.list_adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -68,7 +70,7 @@ public class CompletedListAdapter extends ArrayAdapter<TaskModel> {
 
         TextView tv_rowName = convertView.findViewById(R.id.tv_rowName);
         TextView tv_rowShortDescription = convertView.findViewById(R.id.tv_rowShortDescription);
-        CheckBox cb_isCompleted = convertView.findViewById(R.id.cb_isCompleted);
+        CheckBox cb_compIsCompleted = convertView.findViewById(R.id.cb_compIsCompleted);
 
         TaskDataBaseHelper db = new TaskDataBaseHelper(getContext());
 
@@ -76,14 +78,44 @@ public class CompletedListAdapter extends ArrayAdapter<TaskModel> {
         tv_rowShortDescription.setText(getItem(position).getShortDescription());
 
 
+        cb_compIsCompleted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                TaskModel temp = getItem(position);
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        if(!isChecked)
+                        {
+                            remove(temp);
+                            temp.setCompleted(false);
+                            db.updateTask(temp);
+                        }
+                    }
+                }, 500);
+
+            }
+        });
+
+/*
         cb_isCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TaskModel temp = getItem(position);
-                temp.setCompleted(cb_isCompleted.isChecked());
-                db.updateTask(temp);
+
+                if(!cb_isCompleted.isChecked())
+                {
+                    remove(temp);
+                    temp.setCompleted(false);
+                    db.updateTask(temp);
+                }
+
+
+
             }
         });
+        */
 
 
 

@@ -2,12 +2,14 @@ package com.test.goal_app.list_adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -79,36 +81,65 @@ public class MainListAdapter extends ArrayAdapter<TaskModel> {
             public void onClick(View v) {
 
                 TaskModel temp = getItem(position);
+                remove(temp);
                 temp.setDeleted(true);
                 db.updateTask(temp);
 
                 //Testing opening specific fragments
-                if(!backString.equals(null)){
-                    if(backString.equals("TaskPage"))
-                    {
-                        Intent intent = new Intent(mContext, TaskPage.class);
-                        intent.putExtra("taskID", parentTask);
-                        mContext.startActivity(intent);
-                    }
-                    else
-                    {
-                        Intent intent = new Intent(mContext, MainActivity.class);
-                        intent.putExtra("fragToOpen", backString);
-                        mContext.startActivity(intent);
-                    }
-                }
+//                if(!backString.equals(null)){
+//                    if(backString.equals("TaskPage"))
+//                    {
+//                        Intent intent = new Intent(mContext, TaskPage.class);
+//                        intent.putExtra("taskID", parentTask);
+//                        mContext.startActivity(intent);
+//                    }
+//                    else
+//                    {
+//                        Intent intent = new Intent(mContext, MainActivity.class);
+//                        intent.putExtra("fragToOpen", backString);
+//                        mContext.startActivity(intent);
+//                    }
+//                }
 
             }
         });
+
+        cb_isCompleted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                TaskModel temp = getItem(position);
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        if(isChecked)
+                        {
+                            remove(temp);
+                            temp.setCompleted(true);
+                            db.updateTask(temp);
+                        }
+                    }
+                }, 500);
+
+
+
+            }
+        });
+/*
 
         cb_isCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     TaskModel temp = getItem(position);
-                    temp.setCompleted(cb_isCompleted.isChecked());
-                    db.updateTask(temp);
+                    if(cb_isCompleted.isChecked())
+                    {
+                        remove(temp);
+                       temp.setCompleted(true);
+                       db.updateTask(temp);
+                    }
             }
         });
+*/
 
         btn_taskPage.setOnClickListener(new View.OnClickListener() {
             @Override

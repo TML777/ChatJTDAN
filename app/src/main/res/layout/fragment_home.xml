@@ -49,8 +49,8 @@
 
     <ImageButton
             android:id="@+id/btn_openAddTaskPage"
-            android:layout_width="70dp"
-            android:layout_height="56dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="35dp"
             android:layout_marginBottom="35dp"
             android:src="@drawable/add"

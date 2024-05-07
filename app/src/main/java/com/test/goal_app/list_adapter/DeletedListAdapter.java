@@ -94,12 +94,13 @@ public class DeletedListAdapter extends ArrayAdapter<TaskModel> {
             public void onClick(View v) {
 
                 TaskModel temp = getItem(position);
+                remove(temp);
                 temp.setDeleted(false);
                 db.updateTask(temp);
 
-                Intent intent = new Intent(mContext, MainActivity.class);
-                intent.putExtra("fragToOpen", "Dashboard");
-                mContext.startActivity(intent);
+//                Intent intent = new Intent(mContext, MainActivity.class);
+//                intent.putExtra("fragToOpen", "Dashboard");
+//                mContext.startActivity(intent);
 
             }
         });

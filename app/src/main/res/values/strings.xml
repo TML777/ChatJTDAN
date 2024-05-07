@@ -15,4 +15,6 @@
     <string name="calendarFowardBtn"><![CDATA[->]]></string>
     <string name="addsubtask">Add Subtask</string>
     <string name="Archive">Archive</string>
+    <string name="ShortDescription">Short Description:</string>
+    <string name="LongDescription">Long Description:</string>
 </resources>

@@ -66,14 +66,14 @@ public class AddTask extends AppCompatActivity {
 ////////////////// Sets Min date to today
         SimpleDateFormat f = new SimpleDateFormat("dd-MMM-yyyy");
         Date date = new Date();
-        try {
-            String string_date = f.format(date);
-            Date d = f.parse(string_date);
-            long milliseconds = d.getTime();
-            cv_addCalendar.setMinDate(milliseconds);
+        long milliseconds = date.getTime();
+        cv_addCalendar.setMinDate(milliseconds);
+
+        /*try {
+
         } catch (ParseException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
 ///////// Calendar change listener
@@ -96,6 +96,9 @@ public class AddTask extends AppCompatActivity {
             public void onClick(View v) {
                 df2 = new SimpleDateFormat("MM/dd/yy");
 
+                Date selectedDate, currentDate;
+                String formatedDate;
+
 
                 String name = et_addTaskName.getText().toString();
                 if(name.isEmpty()) {
@@ -107,8 +110,21 @@ public class AddTask extends AppCompatActivity {
                     et_addTaskName.setBackground(getDrawable(R.drawable.green_border));
 
 
+
                     try{
-                        String formatedDate = df2.format(new Date(deadLineDateMilli));
+                        selectedDate = new Date(deadLineDateMilli);
+                        currentDate = new Date();
+
+                        if(selectedDate.before(currentDate))
+                        {
+                            formatedDate = df2.format(currentDate);
+
+                        }
+                        else
+                        {
+                            formatedDate = df2.format(selectedDate);
+                        }
+
 
                         taskModel = new TaskModel(-1, et_addTaskName.getText().toString(), et_addShortDesc.getText().toString(),
                                 et_addLongDesc.getText().toString(), formatedDate,
@@ -126,7 +142,7 @@ public class AddTask extends AppCompatActivity {
                     boolean success = dataBaseHelper.addOne(taskModel);
 
                     if(success)
-                        Toast.makeText( AddTask.this, "Task Created!" + success, Toast.LENGTH_SHORT).show();
+                        Toast.makeText( AddTask.this, "Task Created!", Toast.LENGTH_SHORT).show();
 
                     // back to task list
                     openTaskList();

@@ -5,26 +5,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.test.goal_app.list_adapter.MainListAdapter;
 
-import kotlinx.coroutines.scheduling.Task;
 
 //// TaskPage displays a specific task
 
 public class TaskPage extends AppCompatActivity {
 
-    Button btn_taskPageBack, btn_editTask, btn_saveEdits, bt_addSubtask;
+    Button btn_saveEdits, bt_addSubtask;
+    ImageButton btn_taskPageBack, btn_editTask, btn_taskDelete;
     EditText et_name, et_shortDescription, et_longDescription, et_deadLine;
     ListView lv_subTaskList;
 
     TaskDataBaseHelper db;
 
     MainListAdapter mainListAdapter;
+
+    CheckBox cb_taskIsCompleted;
 
     String backString;
 
@@ -53,6 +59,8 @@ public class TaskPage extends AppCompatActivity {
         btn_saveEdits = findViewById(R.id.btn_saveEdits);
         bt_addSubtask = findViewById(R.id.bt_addSubtask);
         lv_subTaskList = findViewById(R.id.lv_subTaskList);
+        cb_taskIsCompleted = findViewById(R.id.cb_taskIsCompleted);
+        btn_taskDelete = findViewById(R.id.btn_taskDelete);
 
         getSupportActionBar().hide();
 
@@ -97,6 +105,7 @@ public class TaskPage extends AppCompatActivity {
                 //hides edit button shows save button
                 btn_editTask.setVisibility(View.GONE);
                 btn_saveEdits.setVisibility(View.VISIBLE);
+                bt_addSubtask.setVisibility(View.GONE);
 
             }
         });
@@ -114,6 +123,7 @@ public class TaskPage extends AppCompatActivity {
                 //hides save button shows edit button
                 btn_saveEdits.setVisibility(View.GONE);
                 btn_editTask.setVisibility(View.VISIBLE);
+                bt_addSubtask.setVisibility(View.VISIBLE);
 
                 //new task model
                 task.setName(et_name.getText().toString());
@@ -144,6 +154,31 @@ public class TaskPage extends AppCompatActivity {
 
             }
         });
+
+        btn_taskDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                task.setDeleted(true);
+                task.setCompleted(false);
+                db.updateTask(task);
+
+                backAction();
+            }
+        });
+
+
+        cb_taskIsCompleted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                task.setCompleted(cb_taskIsCompleted.isChecked());
+                db.updateTask(task);
+
+            }
+        });
+
+
     }
 
 
